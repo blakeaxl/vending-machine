@@ -1,7 +1,7 @@
 import React from 'react'
 import "../../styles/components/userInterface.css"
 
-const UserInterface = () => {
+const UserInterface = ({subTotal, TotalBalance}) => {
   return (
     <div className="user-interface_main">
         <div className="user-interface_user-interactions-container">

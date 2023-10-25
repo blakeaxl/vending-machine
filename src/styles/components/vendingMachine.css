@@ -1,0 +1,23 @@
+.vending-machine-main {
+
+    width: 35rem;
+    height: 40rem;
+    background-color: #0027B2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    border-radius: 1rem;
+    overflow: hidden;
+    margin-top: 2rem;
+
+}
+
+.vending-machine-base {
+
+    width: 30rem;
+    height: 3rem;
+    background-color: #000469;
+    border-radius: 0 0 1rem 1rem;
+
+}
