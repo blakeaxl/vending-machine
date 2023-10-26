@@ -66,6 +66,14 @@
     border-radius: 2rem;
     color: black;
     font-size: 1rem;
+    cursor: pointer;
+    transition: 0.3s ease;
+
+}
+
+.user-interface_return-money-button:active {
+
+    background-color: #A8B60D;
 
 }
 

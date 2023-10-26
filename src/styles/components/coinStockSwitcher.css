@@ -1,0 +1,55 @@
+.coin-stock-main-container {
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.coin-stock_main-text {
+    width: 100%;
+    text-align: center;
+    color: black;
+    font-size: 1rem;
+}
+
+.coin-stock_options-container {
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.coin-stock_switcher-button {
+
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    border: none;
+    background-color: #000469;
+    color: white;
+    cursor: pointer;
+
+}
+
+.coin-stock_stock-container {
+
+    width: 4rem;
+    height: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #000469;
+    border-radius: 2rem;
+
+}
+
+.coin-stock_stock-text {
+
+    color: white;
+    font-size: 1rem;
+
+}

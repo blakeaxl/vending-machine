@@ -6,24 +6,28 @@ import "../styles/components/vendingMachine.css";
 
 const VendingMachine = () => {
 
-    const [subTotal, setSubTotal] = useState(0.0)
+    const [subTotal, setSubTotal] = useState(0.0);
+
+    const [message, setMessage] = useState("Bienvenido, por favor inserte una moneda");
+
+    const [chosenProduct, setChosenProduct] = useState({});
 
     const TotalBalance = (value) => {
 
-        let initialValue = subTotal;
-
-        let newValue = subTotal + parseFloat(value).toFixed(2)
+        let newValue = subTotal + value
 
         setSubTotal(newValue);
 
     }
 
+    
+
   return (
     <>
       <div className="vending-machine-main">
-        <ProductsInterface />
-        <UserInterface subTotal={subTotal} TotalBalance={TotalBalance}/>
-        <ProductReturnInterface />
+        <ProductsInterface subTotal={subTotal} setSubTotal={setSubTotal} setChosenProduct={setChosenProduct} setMessage={setMessage}/>
+        <UserInterface subTotal={subTotal} TotalBalance={TotalBalance} setSubTotal={setSubTotal} message={message} setMessage={setMessage}/>
+        <ProductReturnInterface chosenProduct={chosenProduct} setChosenProduct={setChosenProduct}/>
       </div>
       <div className="vending-machine-base" />
     </>
