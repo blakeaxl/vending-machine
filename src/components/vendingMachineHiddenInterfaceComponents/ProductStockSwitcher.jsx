@@ -1,26 +1,7 @@
 import React from "react";
 import "../../styles/components/productStockSwitcher.css";
 
-const ProductStockSwitcher = ({ product, setListState }) => {
-  
-  const StockModifier = (type) => {
-    const initialProducts =
-      JSON.parse(localStorage.getItem("vending-machine-products")) || [];
-    const updatedProducts = initialProducts.map((listProduct) => {
-      if (listProduct.id === product.id) {
-        return {
-          ...listProduct,
-          stock: type === "add" ? listProduct.stock + 1 : listProduct.stock - 1,
-        };
-      }
-      return listProduct;
-    });
-    localStorage.setItem(
-      "vending-machine-products",
-      JSON.stringify(updatedProducts)
-    );
-    setListState(updatedProducts);
-  };
+const ProductStockSwitcher = ({ product, StockModifier }) => {
 
   return (
     <div className="product-stock-main-container" key={product.id}>
@@ -29,7 +10,7 @@ const ProductStockSwitcher = ({ product, setListState }) => {
         <button
           className="product-stock_switcher-button"
           onClick={() => {
-            StockModifier("rest");
+            StockModifier("rest", product);
           }}
         >
           -
@@ -40,7 +21,7 @@ const ProductStockSwitcher = ({ product, setListState }) => {
         <button
           className="product-stock_switcher-button"
           onClick={() => {
-            StockModifier("add");
+            StockModifier("add", product);
           }}
         >
           +
