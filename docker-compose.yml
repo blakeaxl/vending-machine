@@ -1,0 +1,15 @@
+version: '3'
+services:
+  react-app:
+    container_name: vending-machine
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./:/usr/src/app
+    command: sh -c 'npm && npm start'
+    ports:
+      - "3000:3000"
+    tty: true
