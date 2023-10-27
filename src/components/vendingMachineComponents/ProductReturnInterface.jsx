@@ -3,8 +3,6 @@ import "../../styles/components/productReturnInterface.css"
 
 const ProductReturnInterface = ({chosenProduct, setChosenProduct}) => {
 
-
-
   return (
     <div className="product-return-interface_main">
         {

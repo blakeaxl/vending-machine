@@ -7,48 +7,55 @@ import "../styles/components/vendingMachine.css";
 const VendingMachine = ({ CoinStockModifier, ProductStockModifier, initialCoins }) => {
   const [subTotal, setSubTotal] = useState(0.0);
 
-  const [message, setMessage] = useState(
-    "Bienvenido, por favor inserte una moneda"
-  );
+// Estado para el mensaje de bienvenida
+const [message, setMessage] = useState(
+  "Bienvenido, por favor inserte una moneda"
+);
 
-  const [chosenProduct, setChosenProduct] = useState({});
+// Estado para el producto elegido
+const [chosenProduct, setChosenProduct] = useState({});
 
-  const posibleCoins = [
-    {
-      id: 1,
-      value: 0.05,
-      quantity: 0,
-    },
-    {
-      id: 2,
-      value: 0.10,
-      quantity: 0,
-    },
-    {
-      id: 3,
-      value: 0.25,
-      quantity: 0,
-    },
-    {
-      id: 4,
-      value: 1.0,
-      quantity: 0,
-    },
-  ];
+// Posibles monedas
+const posibleCoins = [
+  {
+    id: 1,
+    value: 0.05,
+    quantity: 0,
+  },
+  {
+    id: 2,
+    value: 0.10,
+    quantity: 0,
+  },
+  {
+    id: 3,
+    value: 0.25,
+    quantity: 0,
+  },
+  {
+    id: 4,
+    value: 1.0,
+    quantity: 0,
+  },
+];
 
-  const [currentCoins, setCurrentCoins] = useState(posibleCoins);
+// Estado para las monedas actuales
+const [currentCoins, setCurrentCoins] = useState(posibleCoins);
 
-  const TotalBalance = (value) => {
-    const newList = [...currentCoins];
-    const updatedList = newList.map((listCoin) => {
-      if (listCoin.value === value) {
-        return { ...listCoin, quantity: listCoin.quantity + 1 };
-      }
-      return listCoin;
-    });
-    setCurrentCoins(updatedList);
-    setSubTotal(subTotal + value);
-  };
+// Función para calcular el balance total
+const TotalBalance = (value) => {
+  const newList = [...currentCoins];
+  const updatedList = newList.map((listCoin) => {
+    if (listCoin.value === value) {
+      return { ...listCoin, quantity: listCoin.quantity + 1 };
+    }
+    return listCoin;
+  });
+  
+  // Actualizar el estado de las monedas actuales y el subtotal
+  setCurrentCoins(updatedList);
+  setSubTotal(subTotal + value);
+};
 
   return (
     <>

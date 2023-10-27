@@ -16,8 +16,6 @@ const ProductsInterface = ({
   const machineProducts =
     JSON.parse(localStorage.getItem("vending-machine-products")) || [];
 
-  console.log(currentCoins);
-
   const ProcessProduct = (product) => {
 
     const listProduct = machineProducts.find(item => item.id === product.id);
@@ -72,10 +70,6 @@ const ProductsInterface = ({
               if (change === 0) break; // Si ya hemos dado todo el cambio necesario, salimos del bucle.
             }
   
-            console.log("COINS TO RETURN:")
-  
-            console.log(coinsToReturn)
-  
             coinsToReturn.forEach(item => {
               CoinStockModifier("rest", item, item.quantity)
             })
@@ -108,12 +102,6 @@ const ProductsInterface = ({
   
               setSubTotal(0.0); // Reiniciamos el subtotal.
             }
-  
-            // setMessage(
-            //   `${product.name} fue entregado, su cambio es de ${exchange.toFixed(
-            //     2
-            //   )}$!`
-            // );
   
             setTimeout(() => {
               setMessage("Bienvenido, por favor inserte una moneda");

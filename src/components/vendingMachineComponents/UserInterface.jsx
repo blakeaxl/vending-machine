@@ -12,29 +12,33 @@ const UserInterface = ({
   posibleCoins
 }) => {
   const RecoverMoney = () => {
+    // Esta función devuelve el dinero al usuario
     if (subTotal !== 0) {
       setSubTotal(0.0);
-
+  
       setMessage(
         `El dinero devuelto es de ${currentCoins
           .map((coin) => `${coin.quantity} moneda(s) de ${coin.value}$`)
           .join(", ")}!`
       );
-
+  
       setCurrentCoins(posibleCoins);
       
     } else {
       setMessage("No hay dinero para devolver");
     }
-
+  
+    // Espera 3 segundos antes de mostrar el mensaje
     setTimeout(() => {
       setMessage("Bienvenido, por favor inserte una moneda");
     }, [3000]);
   };
-
+  
   const AddMoney = (value) => {
+    // Esta función agrega dinero al balance total del usuario
     TotalBalance(value);
-
+  
+    // Muestra un mensaje pidiéndole al usuario que elija un producto
     setMessage("Por favor elige un producto");
   };
 
