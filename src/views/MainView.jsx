@@ -17,30 +17,40 @@ const MainView = () => {
     const listCoin = initialCoins.find(item => item.id === coin.id);
 
     if (listCoin) {
-      listCoin.stock += actionType === "add" ? quantity : -quantity;
-      localStorage.setItem("vending-machine-coins", JSON.stringify(initialCoins));
-      setInitialCoins(initialCoins);
+      if (actionType === "rest" && listCoin.stock <= 0) {
+        console.log("No se puede restar más stock porque ya está en 0.");
+      } else {
+        listCoin.stock += actionType === "add" ? quantity : -quantity;
+        localStorage.setItem("vending-machine-coins", JSON.stringify(initialCoins));
+        setInitialCoins(initialCoins);
+      }
     }
-  }
+}
 
-  const ProductStockModifier = (type, product) => {
-    const initialProducts =
-      JSON.parse(localStorage.getItem("vending-machine-products")) || [];
-    const updatedProducts = initialProducts.map((listProduct) => {
-      if (listProduct.id === product.id) {
+const ProductStockModifier = (type, product) => {
+  const initialProducts =
+    JSON.parse(localStorage.getItem("vending-machine-products")) || [];
+  const updatedProducts = initialProducts.map((listProduct) => {
+    if (listProduct.id === product.id) {
+      if (type === "rest" && listProduct.stock <= 0) {
+        console.log("No se puede restar más stock porque ya está en 0.");
+        return listProduct;
+      } else {
         return {
           ...listProduct,
           stock: type === "add" ? listProduct.stock + 1 : listProduct.stock - 1,
         };
       }
-      return listProduct;
-    });
-    localStorage.setItem(
-      "vending-machine-products",
-      JSON.stringify(updatedProducts)
-    );
-    setInitialProducts(updatedProducts);
-  };
+    }
+    return listProduct;
+  });
+  localStorage.setItem(
+    "vending-machine-products",
+    JSON.stringify(updatedProducts)
+  );
+  setInitialProducts(updatedProducts);
+};
+
 
   useEffect(() => {
     const localStorageProducts =

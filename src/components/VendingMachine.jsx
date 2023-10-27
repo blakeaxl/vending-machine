@@ -71,6 +71,9 @@ const VendingMachine = ({ CoinStockModifier, ProductStockModifier, initialCoins 
           setSubTotal={setSubTotal}
           message={message}
           setMessage={setMessage}
+          currentCoins={currentCoins}
+          posibleCoins={posibleCoins}
+          setCurrentCoins={setCurrentCoins}
         />
         <ProductReturnInterface
           chosenProduct={chosenProduct}

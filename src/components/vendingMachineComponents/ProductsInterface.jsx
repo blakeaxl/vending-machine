@@ -19,112 +19,129 @@ const ProductsInterface = ({
   console.log(currentCoins);
 
   const ProcessProduct = (product) => {
-    if (subTotal.toFixed(2) !== 0) {
-      if (subTotal.toFixed(2) >= product.price.toFixed(2)) {
-        setChosenProduct(product);
 
-        if (product.price.toFixed(2) === subTotal.toFixed(2)) {
-          setSubTotal(0.0);
+    const listProduct = machineProducts.find(item => item.id === product.id);
 
-          setMessage(`${product.name} fue entregado, gracias por su compra!`);
+    if(listProduct.stock > 0) {
 
-          currentCoins.forEach((currentCoin) => {
-            CoinStockModifier("add", currentCoin, currentCoin.quantity);
-          });
-
-          setCurrentCoins(posibleCoins);
-
-          ProductStockModifier("rest", product);
-
-          setTimeout(() => {
-            setMessage("Bienvenido, por favor inserte una moneda");
-          }, [3000]);
-        } else {
-
-          const exchange = subTotal.toFixed(2) - product.price.toFixed(2);
-
-          const newCoinsList = initialCoins.filter(item => item.id !== 4); //lsita sin 1$
-
-          let change = subTotal.toFixed(2) - product.price.toFixed(2);
-
-          const coinsToReturn = []; // Creamos un array vacío para almacenar las monedas que se devolverán como cambio.
-
-          for (let i = newCoinsList.length - 1; i >= 0; i--) {
-            // Recorremos el array de monedas inicial de mayor a menor valor.
-            const coin = newCoinsList[i]; // Obtenemos la moneda actual.
-            let coinsNeeded = Math.floor(change.toFixed(2) / coin.value.toFixed(2)); // Calculamos cuántas monedas de esta denominación se necesitan para dar el cambio.
-
-            if (coin.stock >= coinsNeeded) {
-              // Si hay suficientes monedas de esta denominación en stock...
-              coinsToReturn.push({ ...coin, quantity: coinsNeeded }); // Agregamos las monedas necesarias al array de monedas a devolver.
-              change -= coinsNeeded * coin.value.toFixed(2); // Restamos el valor total de estas monedas del cambio que queda por dar.
-            } else {
-              // Si no hay suficientes monedas de esta denominación en stock...
-              coinsToReturn.push({ ...coin, quantity: coin.stock }); // Agregamos todas las monedas disponibles al array de monedas a devolver.
-              change -= coin.stock * coin.value.toFixed(2); // Restamos el valor total de estas monedas del cambio que queda por dar.
-            }
-
-            if (change === 0) break; // Si ya hemos dado todo el cambio necesario, salimos del bucle.
-          }
-
-          console.log(coinsToReturn)
-
-          coinsToReturn.forEach(item => {
-            CoinStockModifier("rest", item, item.quantity)
-          })
-
-          if (change > 0) {
-            // Si todavía queda algo de cambio por dar...
-            setMessage(
-              // Mostramos un mensaje de error.
-              `Lo siento, no tengo monedas suficientes para darle su cambio de ${change.toFixed(
-                2
-              )}$`
-            );
-          } else {
-            // Si hemos dado todo el cambio necesario...
-            setMessage(
-              // Mostramos un mensaje con las monedas que se devolverán como cambio.
-              `${product.name} fue entregado, su cambio es de ${coinsToReturn
-                .map((coin) => `${coin.quantity} moneda(s) de ${coin.value}$`)
-                .join(", ")}!`
-            );
-
+      if (subTotal.toFixed(2) !== 0) {
+        if (subTotal.toFixed(2) >= product.price.toFixed(2)) {
+          setChosenProduct(product);
+  
+          if (product.price.toFixed(2) === subTotal.toFixed(2)) {
+            setSubTotal(0.0);
+  
+            setMessage(`${product.name} fue entregado, gracias por su compra!`);
+  
             currentCoins.forEach((currentCoin) => {
-              // Actualizamos el stock de las monedas actuales.
               CoinStockModifier("add", currentCoin, currentCoin.quantity);
             });
-
-            setCurrentCoins(posibleCoins); // Reiniciamos las monedas actuales.
-
-            ProductStockModifier("rest", product); // Restamos una unidad del stock del producto comprado.
-
-            setSubTotal(0.0); // Reiniciamos el subtotal.
+  
+            setCurrentCoins(posibleCoins);
+  
+            ProductStockModifier("rest", product);
+  
+            setTimeout(() => {
+              setMessage("Bienvenido, por favor inserte una moneda");
+            }, [3000]);
+          } else {
+  
+            const exchange = subTotal.toFixed(2) - product.price.toFixed(2);
+  
+            const newCoinsList = initialCoins.filter(item => item.id !== 4); //lsita sin 1$
+  
+            let change = subTotal.toFixed(2) - product.price.toFixed(2);
+  
+            const coinsToReturn = []; // Creamos un array vacío para almacenar las monedas que se devolverán como cambio.
+  
+            for (let i = newCoinsList.length - 1; i >= 0; i--) {
+              // Recorremos el array de monedas inicial de mayor a menor valor.
+              const coin = newCoinsList[i]; // Obtenemos la moneda actual.
+              let coinsNeeded = Math.floor(change.toFixed(2) / coin.value.toFixed(2)); // Calculamos cuántas monedas de esta denominación se necesitan para dar el cambio.
+  
+              if (coin.stock >= coinsNeeded) {
+                // Si hay suficientes monedas de esta denominación en stock...
+                coinsToReturn.push({ ...coin, quantity: coinsNeeded }); // Agregamos las monedas necesarias al array de monedas a devolver.
+                change -= coinsNeeded * coin.value.toFixed(2); // Restamos el valor total de estas monedas del cambio que queda por dar.
+              } else {
+                // Si no hay suficientes monedas de esta denominación en stock...
+                coinsToReturn.push({ ...coin, quantity: coin.stock }); // Agregamos todas las monedas disponibles al array de monedas a devolver.
+                change -= coin.stock * coin.value.toFixed(2); // Restamos el valor total de estas monedas del cambio que queda por dar.
+              }
+  
+              if (change === 0) break; // Si ya hemos dado todo el cambio necesario, salimos del bucle.
+            }
+  
+            console.log("COINS TO RETURN:")
+  
+            console.log(coinsToReturn)
+  
+            coinsToReturn.forEach(item => {
+              CoinStockModifier("rest", item, item.quantity)
+            })
+  
+            if (change > 0) {
+              // Si todavía queda algo de cambio por dar...
+              setMessage(
+                // Mostramos un mensaje de error.
+                `Lo siento, no tengo monedas suficientes para darle su cambio de ${exchange.toFixed(
+                  2
+                )}$`
+              );
+            } else {
+              // Si hemos dado todo el cambio necesario...
+              setMessage(
+                // Mostramos un mensaje con las monedas que se devolverán como cambio.
+                `${product.name} fue entregado, su cambio es de ${coinsToReturn
+                  .map((coin) => `${coin.quantity} moneda(s) de ${coin.value}$`)
+                  .join(", ")}!`
+              );
+  
+              currentCoins.forEach((currentCoin) => {
+                // Actualizamos el stock de las monedas actuales.
+                CoinStockModifier("add", currentCoin, currentCoin.quantity);
+              });
+  
+              setCurrentCoins(posibleCoins); // Reiniciamos las monedas actuales.
+  
+              ProductStockModifier("rest", product); // Restamos una unidad del stock del producto comprado.
+  
+              setSubTotal(0.0); // Reiniciamos el subtotal.
+            }
+  
+            // setMessage(
+            //   `${product.name} fue entregado, su cambio es de ${exchange.toFixed(
+            //     2
+            //   )}$!`
+            // );
+  
+            setTimeout(() => {
+              setMessage("Bienvenido, por favor inserte una moneda");
+            }, [3000]);
           }
-
+        } else {
           setMessage(
-            `${product.name} fue entregado, su cambio es de ${exchange.toFixed(
-              2
-            )}$!`
+            `El producto seleccionado cuesta ${
+              product.price
+            }$ y solo insertaste ${subTotal.toFixed(2)}$`
           );
-
-          setTimeout(() => {
-            setMessage("Bienvenido, por favor inserte una moneda");
-          }, [3000]);
         }
       } else {
-        setMessage(
-          `El producto seleccionado cuesta ${
-            product.price
-          }$ y solo insertaste ${subTotal.toFixed(2)}$`
-        );
+        setMessage("No has insertado dinero");
+  
+        setTimeout(() => {
+          setMessage("Bienvenido, por favor inserte una moneda");
+        }, [3000]);
       }
+
     } else {
-      setMessage("No has insertado dinero");
+
+      setMessage("El producto que quieres no se encuentra disponible, por favor intenta con otro")
 
       setTimeout(() => {
-        setMessage("Bienvenido, por favor inserte una moneda");
+        setMessage("Por favor elige un producto");
       }, [3000]);
+
     }
   };
 

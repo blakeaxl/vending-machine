@@ -1,63 +1,103 @@
-import React from 'react'
-import "../../styles/components/userInterface.css"
+import React from "react";
+import "../../styles/components/userInterface.css";
 
-const UserInterface = ({subTotal, TotalBalance, setSubTotal, message, setMessage}) => {
+const UserInterface = ({
+  subTotal,
+  TotalBalance,
+  setSubTotal,
+  message,
+  setMessage,
+  currentCoins,
+  setCurrentCoins,
+  posibleCoins
+}) => {
+  const RecoverMoney = () => {
+    if (subTotal !== 0) {
+      setSubTotal(0.0);
 
-    const RecoverMoney = () => {
+      setMessage(
+        `El dinero devuelto es de ${currentCoins
+          .map((coin) => `${coin.quantity} moneda(s) de ${coin.value}$`)
+          .join(", ")}!`
+      );
 
-        if(subTotal !== 0) {
-
-            setSubTotal(0.0)
-
-            setMessage("El valor devuelto fue de " + subTotal.toFixed(2) + "$")
-
-        }
-        else {
-
-            setMessage("No hay dinero para devolver")
-
-        }
-
-
-        setTimeout(() => {
-
-            setMessage("Bienvenido, por favor inserte una moneda")
-
-        }, [3000])
-
+      setCurrentCoins(posibleCoins);
+      
+    } else {
+      setMessage("No hay dinero para devolver");
     }
 
-    const AddMoney = (value) => {
+    setTimeout(() => {
+      setMessage("Bienvenido, por favor inserte una moneda");
+    }, [3000]);
+  };
 
-        TotalBalance(value)
+  const AddMoney = (value) => {
+    TotalBalance(value);
 
-        setMessage("Por favor elige un producto")
-
-    }
+    setMessage("Por favor elige un producto");
+  };
 
   return (
     <div className="user-interface_main">
-        <div className="user-interface_user-interactions-container">
-            <div className="user-interface_user-cash-selector-container">
-                <button className="user-interface_price-selector-button" onClick={() => {AddMoney(0.05)}}>0.05$</button>
-                <button className="user-interface_price-selector-button" onClick={() => {AddMoney(0.10)}}>0.10$</button>
-                <button className="user-interface_price-selector-button" onClick={() => {AddMoney(0.25)}}>0.25$</button>
-                <button className="user-interface_price-selector-button" onClick={() => {AddMoney(1.00)}}>1$</button>
-            </div>
-            <div className="user-interface-current-balance-and-return-money-container">
-                <button className="user-interface_return-money-button" onClick={() => {RecoverMoney()}}>Devolver dinero</button>
-                <div className="user-interface_current-balance-container">
-                    <p className="user-interface_current-balance-text">{subTotal.toFixed(2)}$</p>
-                </div>
-            </div>
+      <div className="user-interface_user-interactions-container">
+        <div className="user-interface_user-cash-selector-container">
+          <button
+            className="user-interface_price-selector-button"
+            onClick={() => {
+              AddMoney(0.05);
+            }}
+          >
+            0.05$
+          </button>
+          <button
+            className="user-interface_price-selector-button"
+            onClick={() => {
+              AddMoney(0.1);
+            }}
+          >
+            0.10$
+          </button>
+          <button
+            className="user-interface_price-selector-button"
+            onClick={() => {
+              AddMoney(0.25);
+            }}
+          >
+            0.25$
+          </button>
+          <button
+            className="user-interface_price-selector-button"
+            onClick={() => {
+              AddMoney(1.0);
+            }}
+          >
+            1$
+          </button>
         </div>
-        <div className="user-interface_info-screen-container">
-            <div className="user-interface_info-screen">
-                <p className="user-interface_info-screen-text">{message}</p>
-            </div>
+        <div className="user-interface-current-balance-and-return-money-container">
+          <button
+            className="user-interface_return-money-button"
+            onClick={() => {
+              RecoverMoney();
+            }}
+          >
+            Devolver dinero
+          </button>
+          <div className="user-interface_current-balance-container">
+            <p className="user-interface_current-balance-text">
+              {subTotal.toFixed(2)}$
+            </p>
+          </div>
         </div>
+      </div>
+      <div className="user-interface_info-screen-container">
+        <div className="user-interface_info-screen">
+          <p className="user-interface_info-screen-text">{message}</p>
+        </div>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default UserInterface
+export default UserInterface;
