@@ -8,13 +8,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    /* position: absolute;
-    transition: 0.3s ease;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 15;
-    overflow: hidden; */
+    overflow: hidden;
 }
 
 .hidden-interface_items-container {
@@ -23,5 +17,27 @@
     justify-content: space-between;
     align-items: center;
     width: 90%;
+
+}
+
+@media screen and (max-width: 600px) {
+
+    .hidden-interface_items-container:first-child {
+
+        margin-top: 38rem;
+    
+    }
+
+    .hidden-interface_items-container {
+
+        flex-direction: column;
+    
+    }
+
+    .hidden-interface_container {
+
+        overflow: scroll;
+
+    }
 
 }
